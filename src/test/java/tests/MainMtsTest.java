@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-
 public class MainMtsTest extends BasicTest {
 
     @Test
@@ -119,5 +118,6 @@ public class MainMtsTest extends BasicTest {
         Assertions.assertEquals("Google Pay", mts.gPayLabel());
         Assertions.assertEquals("Yandex Pay", mts.yPayLabel());
     }
+
 
 }
