@@ -4,7 +4,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.List;
 
 public class Mts {
     @FindBy(xpath = "//div[@class=\"pay__wrapper\"]/child::h2")
@@ -12,24 +12,6 @@ public class Mts {
 
     @FindBy(xpath = "//button[@id='cookie-agree' and text()='Принять']")
     private WebElement cookieAgree;
-
-    @FindBy(xpath = "//div[@class='pay__partners']/descendant::img[@alt='Visa']")
-    private WebElement altVisa;
-
-    @FindBy(xpath = "//div[@class='pay__partners']/descendant::img[@alt='Verified By Visa']")
-    private WebElement altVerifiedByVisa;
-
-    @FindBy(xpath = "//div[@class='pay__partners']/descendant::img[@alt='MasterCard']")
-    private WebElement altMasterCard;
-
-    @FindBy(xpath = "//div[@class='pay__partners']/descendant::img[@alt='MasterCard Secure Code']")
-    private WebElement altMasterCardSecureCode;
-
-    @FindBy(xpath = "//div[@class='pay__partners']/descendant::img[@alt='Белкарт']")
-    private WebElement altBelcard;
-
-    @FindBy(xpath = "//div[@class='pay__partners']/descendant::img[@alt='МИР']")
-    private WebElement altPeace;
 
     @FindBy(xpath = "//div[@class='pay__wrapper']/descendant::a[text()='Подробнее о сервисе']")
     private WebElement link;
@@ -49,9 +31,45 @@ public class Mts {
     @FindBy(xpath = "//form[@id='pay-connection']/child::button[@class='button button__default ' and text()='Продолжить']")
     private WebElement continueButton;
 
+    @FindBy(xpath = "//p[@class='header__payment-info']")
+    private WebElement decriptionPay;
 
-    public Mts() {
-    }
+    @FindBy(xpath = "//button[@class='colored disabled ng-star-inserted']")
+    private WebElement payButton;
+
+    @FindBy(xpath = "//label[@class='ng-tns-c49-1 ng-star-inserted']")
+    private WebElement cardNumber;
+
+    @FindBy(xpath = "//label[@class='ng-tns-c49-4 ng-star-inserted']")
+    private WebElement validityPeriod;
+
+    @FindBy(xpath = "//label[@class='ng-tns-c49-5 ng-star-inserted']")
+    private WebElement cvc;
+
+    @FindBy(xpath = "//label[@class='ng-tns-c49-3 ng-star-inserted']")
+    private WebElement nameCardholder;
+
+    @FindBy(xpath = "//label[@class='ng-tns-c52-2 ng-star-inserted']")
+    private WebElement savePay;
+
+    @FindBy(xpath = "//button[@class='gpay-button black plain short ru']")
+    private WebElement gPay;
+
+    @FindBy(xpath = "//button[@class='ya-pay-button ya-pay-button_black']")
+    private WebElement yPay;
+
+    @FindBy(xpath = "//p[@class='select__option']")
+    private List<WebElement> variantsDropDown;
+
+    @FindBy(xpath = "//div[@class='pay__partners']/descendant::img")
+    private List<WebElement> logos;
+
+    @FindBy(xpath = "//img[@class='ng-tns-c55-0 ng-star-inserted']")
+    private List<WebElement> variantsCards;
+
+    @FindBy(xpath = "//img[@class='ng-tns-c55-0 ng-trigger ng-trigger-randomCardState ng-star-inserted']")
+    private List<WebElement> varRandomCards;
+
 
     public void visibleCookie() {
         if (cookieAgree.isDisplayed())
@@ -59,14 +77,16 @@ public class Mts {
     }
 
     public String nameBlockSelect() {
-        String result = nameBlock.getText();
-        return result;
+        return nameBlock.getText();
     }
 
-    public ArrayList availPaymLogos() {
-        ArrayList<WebElement> logos = new ArrayList<>();
-        Collections.addAll(logos, altVisa, altVerifiedByVisa, altMasterCard, altMasterCardSecureCode, altBelcard, altPeace);
-        return logos;
+    public List<String> paymLogos() {
+        List<String> actualLogos = new ArrayList<>();
+        for (WebElement list : logos) {
+            String l = list.getAttribute("alt");
+            actualLogos.add(l);
+        }
+        return actualLogos;
     }
 
     public void goLink() {
@@ -84,5 +104,70 @@ public class Mts {
         moneyField.sendKeys("25.25");
         continueButton.click();
     }
+
+    public String sumFormVis() {
+        return decriptionPay.getText();
+    }
+
+    public String sumButtonVis() {
+        return payButton.getText();
+    }
+
+    public List<String> listDropDown() {
+        dropDown.click();
+        List<String> actualVariants = new ArrayList<>();
+        for (WebElement variants : variantsDropDown) {
+            String v = variants.getText();
+            actualVariants.add(v);
+        }
+        return actualVariants;
+    }
+
+    public String cardNumberLabel() {
+        return cardNumber.getText();
+    }
+
+    public String validityPeriodLabel() {
+        return validityPeriod.getText();
+    }
+
+    public String cvcLabel() {
+        return cvc.getText();
+    }
+
+    public String cardHolderLabel() {
+        return nameCardholder.getText();
+    }
+
+    public String savePayLabel() {
+        return savePay.getText();
+    }
+
+    public String gPayLabel() {
+        return gPay.getAttribute("aria-label");
+    }
+
+    public String yPayLabel() {
+        return yPay.getAttribute("aria-label");
+    }
+
+    public List<String> variantsCardsDispl() {
+        List<String> actualVarCards = new ArrayList<>();
+        for (WebElement varCards : variantsCards) {
+            String cards = varCards.getAttribute("src");
+            actualVarCards.add(cards);
+        }
+        return actualVarCards;
+    }
+
+    public List<String> varRandomCardsDispl() {
+        List<String> actualVarRandCards = new ArrayList<>();
+        for (WebElement varRanCards : varRandomCards) {
+            String cardsRand = varRanCards.getAttribute("src");
+            actualVarRandCards.add(cardsRand);
+        }
+        return actualVarRandCards;
+    }
+
 
 }

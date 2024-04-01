@@ -1,8 +1,8 @@
 package tests;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.junit.After;
-import org.junit.Before;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import java.time.Duration;
@@ -10,18 +10,19 @@ import java.time.Duration;
 public class BasicTest {
     WebDriver wdm;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         WebDriverManager.chromedriver().clearDriverCache().setup();
         wdm = new ChromeDriver();
+        wdm.get("https://www.mts.by/");
         wdm.manage().window().maximize();
         wdm.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
-        wdm.close();
         wdm.quit();
     }
+
 
 }
